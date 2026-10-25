@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApiWeather</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Weather</h1>
+    <form id="weatherForm">
+        <input type="text" id="cityInput" placeholder="Write city">
+        <button type="submit">Find weather</button>
+    </form>
+    <div class="cities">
+        <button class="city-btn" data-city="Kyiv">Kiev</button>
+        <button class="city-btn" data-city="London">London</button>
+        <button class="city-btn" data-city="Paris">Paris</button>
+        <button class="city-btn" data-city="Paris">Berlin</button>
+    </div>
+    <button id="historyBTN">History</button>
+    <div id="historyPanel" class="hidden">
+        <h2>History view</h2>
+        <button id="cleanHistory">Clean history</button>
+        <div id="historyList"></div>
+    </div>
+    <div id="message"></div>
+    <div class="weather-layout">
+        <div id="wetherResult" class="card"></div>
+        <div id="hourlyForecastResult"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

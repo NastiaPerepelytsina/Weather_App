@@ -1,0 +1,221 @@
+body{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("img/thumb-1920-593286.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1{
+    color: #f9f9f9;
+    text-align: center;
+}
+.hidden{
+    display: none;
+}
+
+#weatherForm {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+#cityInput {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    width: 250px;
+}
+#weatherForm button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4a90d9;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+#weatherForm button:hover {
+    background-color: #357abd;
+}
+.cities {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+.city-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.city-btn:hover {
+    background-color: #c0c0c0;
+}
+
+#historyBTN {
+    display: block;
+    margin: 15px auto;
+    padding: 8px 20px;
+    font-size: 14px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+#historyBTN:hover {
+    background-color: #5a6268;
+}
+
+#historyPanel {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    text-align: center;
+}
+#historyPanel h2 {
+    margin-top: 0;
+}
+#cleanHistory {
+    padding: 6px 14px;
+    margin-bottom: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#cleanHistory:hover {
+    background-color: #c82333;
+}
+#historyList button {
+    display: block;
+    margin: 5px auto;
+    padding: 6px 14px;
+    background-color: #e9ecef;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#message {
+    text-align: center;
+    margin: 10px 0;
+    color: #666;
+}
+.weather-layout {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    flex: 1;
+   max-width: 300px;
+    text-align: center;
+}
+.card h2 {
+    margin: 0 0 5px 0;
+    font-size: 28px;
+}
+.card > p {
+    margin: 0 0 15px 0;
+    opacity: 0.8;
+}
+
+
+.description {
+    font-size: 18px;
+    margin: 10px 0 20px 0;
+    opacity: 0.9;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.detail-item p:first-child {
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 0 0 5px 0;
+}
+.detail-item p:last-child {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.hourly-container {
+    max-width: 800px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 20px;
+    flex: 1;
+    min-width: 280px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.hourly-container h2 {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+}
+.hourly-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+    white-space: nowrap;
+}
+.hourly-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+.hour-time {
+    font-size: 12px;
+    margin: 0 0 5px 0;
+    opacity: 0.8;
+}
+.hourly-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+}
+.hour-temp {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+}
+
