@@ -3,7 +3,7 @@ const weatherForm = document.getElementById('weatherForm');
 const cityInput = document.getElementById('cityInput');
 const cityButtons = document.querySelectorAll('.city-btn');
 const historyBtn = document.getElementById('historyBTN');
-const weatherResult = document.getElementById('wetherResult');
+const weatherResult = document.getElementById('weatherResult');
 const hourlyForecastResult = document.getElementById('hourlyForecastResult');
 const historyList = document.getElementById('historyList');
 const historyPanel = document.getElementById('historyPanel');
@@ -24,12 +24,13 @@ function savetoHistory(city, country) {
     searchHistory.unshift(newCity);
     searchHistory = searchHistory.slice(0, maxHistory);
     localStorage.setItem('weatherHistory', JSON.stringify(searchHistory));
+    renderHistory();
 }
 
 function renderHistory() {
     historyList.innerHTML = '';
     if (searchHistory.length == 0) {
-        historyList.innerHTML = "<p>history while empty </p>"
+        historyList.innerHTML = "<p>No searches yet</p>"
         return;
     }
     searchHistory.forEach(function (item) {
@@ -37,6 +38,7 @@ function renderHistory() {
         button.textContent = `${item.city}, ${item.country}`;
         button.addEventListener('click', () => {
             cityInput.value = item.city;
+            getWeather(item.city);
         });
         historyList.append(button);
     });
@@ -47,20 +49,24 @@ async function getWeather(city) {
         message.textContent = "Please enter a valid city.";
         return;
     }
-    wetherResult.innerHTML = "";
+    weatherResult.innerHTML = "";
     message.textContent = "Loading...";
-    const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    if(!response.ok) {
-        message.textContent = "city not found!";
-        return;
+    const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        if (!response.ok) {
+            message.textContent = "City not found!";
+            return;
+        }
+        message.textContent = "";
+        savetoHistory(city, data.location.country);
+        renderWeather(data);
+        getForecast(city);
+    } catch (error) {
+        message.textContent = "No connection. Please try again.";
     }
-    message.textContent = "";
-    savetoHistory(city, data.location.country);
-    renderWeather(data);
-    getForecast(city);
 }
 function renderWeather(data) {
     const {location, current} = data;
@@ -86,7 +92,7 @@ function renderWeather(data) {
     </div>
     <div class="detail-item">
     <p>Wind</p>
-    <p>${wind} км/ч</p>
+    <p>${wind} km/h</p>
     </div>
     <div class="detail-item">
     <p>Cloud</p>
@@ -124,46 +130,21 @@ renderHistory()
 
 
 
-function renderTodayWeather(data) {
-    const {location, current} = data;
 
-    weatherResult.innerHTML = `
-    <div class="card">
-        <h2>${location.name}</h2>
-        <p>${location.country}, ${location.region}</p>
-        <p>${current.temp_c}°C</p>
-        <p class="description">${current.condition.text}</p>
-        <div class="details">
-            <div class="detail-item">
-                <p>Feeling like</p>
-                <p>${current.feelslike_c}°C</p>
-            </div>
-            <div class="detail-item">
-                <p>Wind</p>
-                <p>${current.wind_kph} км/ч</p>
-            </div>
-            <div class="detail-item">
-                <p>Cloud</p>
-                <p>${current.cloud}%</p>
-            </div>
-        </div>
-    </div>
-    `;
-}
-
-function getWeatherByCoords(lat, lon) {
+async function getWeatherByCoords(lat, lon) {
     const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${lat},${lon}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                getWeather('Error');
-                return;
-            }
-            renderTodayWeather(data);
-            getForecast(`${lat},${lon}`);
-        })
-        .catch(() => getWeather('Error'));
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.error) {
+            message.textContent = "Allow your location or search for a city.";
+            return;
+        }
+        renderWeather(data);
+        getForecast(`${lat},${lon}`);
+    } catch (error) {
+        message.textContent = "No connection. Please try again.";
+    }
 }
 
 window.addEventListener('load', () => {
@@ -174,21 +155,27 @@ window.addEventListener('load', () => {
                 const lon = position.coords.longitude;
                 getWeatherByCoords(lat, lon);
             },
-            () => getWeather('Error')
+            () => {
+                message.textContent = "Allow your location or search for a city.";
+            }
         );
     } else {
-        getWeather('Error');
+        message.textContent = "Allow your location or search for a city.";
     }
 });
 
 async function getForecast(city) {
-    const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=1&aqi=no`;
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.error) {
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${encodeURIComponent(city)}&days=1&aqi=no`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data.error) {
+            return;
+        }
+        renderHourlyForecast(data);
+    } catch (error) {
         return;
     }
-    renderHourlyForecast(data);
 }
 
 function renderHourlyForecast(data) {

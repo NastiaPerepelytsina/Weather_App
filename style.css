@@ -1,5 +1,5 @@
 body{
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("img/thumb-1920-593286.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("img/bagground weather.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -217,5 +217,10 @@ h1{
     font-size: 14px;
     font-weight: bold;
     margin: 5px 0 0 0;
+}
+
+#hourlyForecastResult {
+    min-width: 0;
+    max-width: 100%;
 }
 
